@@ -16,11 +16,10 @@ jobs:
       - run: bun i
       # - working-directory: /
       - run: bunx nuxt build --preset github_pages
-      - run: echo "demo.yangfan.cool" > .output/public/CNAME
-      - run: ls -a
+      - run: echo "demo.yangfan.cool" > ./.output/public/CNAME
       - uses: actions/upload-artifact@v4
         with:
-          path: .output/
+          path: ./.output/public
           overwrite: true
           
   deploy:
