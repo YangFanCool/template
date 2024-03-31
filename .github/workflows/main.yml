@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: oven-sh/setup-bun@v1
+        with:
+          node-version: "20"
+      - working-directory: /
+        run: bun i
+      - working-directory: /
+        run: bunx nuxt build --preset github_pages
+      - run: echo "demo.yangfan.cool" > /.output/public/CNAME
+  deploy:
+    needs: build
+    permissions:
+      pages: write      
+      id-token: write
+    environment:
+      name: github_pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
