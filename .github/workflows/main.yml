@@ -12,11 +12,11 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           node-version: "20"
-      - working-directory: /
-        run: bun i
-      - working-directory: /
-        run: bunx nuxt build --preset github_pages
-      - run: echo "demo.yangfan.cool" > /.output/public/CNAME
+      # - working-directory: /
+      - run: bun i
+      # - working-directory: /
+      - run: bunx nuxt build --preset github_pages
+      - run: echo "demo.yangfan.cool" > .output/public/CNAME
   deploy:
     needs: build
     permissions:
