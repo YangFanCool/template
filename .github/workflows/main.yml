@@ -7,20 +7,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Prepare Env
       - uses: actions/checkout@v4
       - run: corepack enable
-      - uses: oven-sh/setup-bun@v1
+      
+      - name: Prepare Bun
+        uses: oven-sh/setup-bun@v1
         with:
           node-version: "20"
-      # - working-directory: /
+
+      - name: Install Dependencies
       - run: bun i
-      # - working-directory: /
       - run: bunx nuxt build --preset github_pages
-      # - run: echo ".yangfan.cool" > ./.output/public/CNAME
-      - uses: actions/upload-artifact@v4
+      - run: echo ".yangfan.cool" > ./.output/public/CNAME
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
           path: ./.output/public
-          overwrite: true
+          
   deploy:
     needs: build
     permissions:
