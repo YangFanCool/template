@@ -17,6 +17,11 @@ jobs:
       # - working-directory: /
       - run: bunx nuxt build --preset github_pages
       - run: echo "demo.yangfan.cool" > .output/public/CNAME
+      - uses: actions/upload-artifact@v4
+        with:
+          path: .output/
+          overwrite: true
+          
   deploy:
     needs: build
     permissions:
